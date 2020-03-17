@@ -7,6 +7,7 @@ package routes
 import (
 	"time"
 
+	authConfig "github.com/cuttle-ai/auth-service/config"
 	"github.com/cuttle-ai/data-integration-service/config"
 	"github.com/cuttle-ai/data-integration-service/log"
 )
@@ -25,7 +26,7 @@ const (
 	Get RequestType = 0
 	//Finished is to return an app context
 	Finished RequestType = 1
-	//Cleanup is to clean up the non-returned app context
+	//CleanUp is to clean up the non-returned app context
 	CleanUp RequestType = 2
 )
 
@@ -39,8 +40,11 @@ type AppContextRequest struct {
 	Out chan AppContextRequest
 	//Exhausted flag states whether the app context exhausted
 	Exhausted bool
+	//Session is  the user session
+	Session authConfig.Session
 }
 
+//AppContextRequestChan is the input request channel for getting the app context
 var AppContextRequestChan = make(chan AppContextRequest)
 
 //SendRequest is to send request to the channel. When this function used as go routines
@@ -81,6 +85,9 @@ func AppContext(in chan AppContextRequest) {
 			usedMaps[id] = time.Now()
 			req.AppContext = config.NewAppContext(log.NewLogger(id))
 			req.Exhausted = false
+
+			//we will also set the session
+			req.AppContext.Session = req.Session
 			go SendRequest(req.Out, req)
 		case Finished:
 			//we will return the rewwuest ids
