@@ -184,7 +184,7 @@ func init() {
 	routes.AddRoutes(routes.Route{
 		Version:     "v1",
 		HandlerFunc: GetServices,
-		Pattern:     "/services/datastore/get",
+		Pattern:     "/services/datastore/list",
 	})
 	routes.AddRoutes(routes.Route{
 		Version:     "v1",
