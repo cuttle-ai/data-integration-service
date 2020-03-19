@@ -10,6 +10,9 @@ import (
 	"os"
 
 	authConfig "github.com/cuttle-ai/auth-service/config"
+	"github.com/cuttle-ai/db-toolkit/datastores/services"
+
+	//to initialize the database
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/jinzhu/gorm"
@@ -117,5 +120,6 @@ func (a *AppContext) ConnectToDB() error {
 	if err == nil {
 		a.Db = d
 	}
+	a.Db.AutoMigrate(&services.Service{})
 	return err
 }

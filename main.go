@@ -11,9 +11,13 @@ import (
 	"os"
 	"os/signal"
 
+	_ "github.com/jinzhu/gorm/dialects/postgres"
+
 	"github.com/cuttle-ai/data-integration-service/config"
 	"github.com/cuttle-ai/data-integration-service/log"
 	"github.com/cuttle-ai/data-integration-service/routes"
+
+	_ "github.com/cuttle-ai/data-integration-service/routes/services/datastore"
 )
 
 /*
@@ -48,6 +52,10 @@ func main() {
 	go func() {
 		log.Info("Starting the server at :" + config.Port)
 		log.Error(s.ListenAndServe())
+	}()
+	go func() {
+		log.Info("Starting the rpc service at :" + config.RPCPort)
+		config.StartRPC()
 	}()
 
 	//listening for syscalls

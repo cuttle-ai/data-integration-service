@@ -3,6 +3,7 @@ cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 cloud.google.com/go v0.37.4 h1:glPeL3BQJsbF6aIIYfZizMwc5LTYz250bDMjttbBGAU=
 cloud.google.com/go v0.37.4/go.mod h1:NHPJ89PdicEuT9hdPXMROBD91xc5uRDxsMtSB16k7hw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/Clever/csvlint v0.2.0 h1:E0BgsC0K/nqhkvmT46++hEbyHzMiTYDjuupUgkP2JWU=
 github.com/Clever/csvlint v0.2.0/go.mod h1:9FtoHZWflbFaNCqosvOBTmWsRYmJ/gCulLxzMg7VwGM=
 github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWXgklEdEo=
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
@@ -29,7 +30,6 @@ github.com/cuttle-ai/auth-service v0.0.0-20200205190752-23a7b3e981e5 h1:wf10EJ0I
 github.com/cuttle-ai/auth-service v0.0.0-20200205190752-23a7b3e981e5/go.mod h1:Z/8p+5elRyueHgNwN+hqifjf7+zY/aUJdSKVM7kTYXg=
 github.com/cuttle-ai/configs v0.0.0-20190824112953-7860fdfd0dae h1:ERhgeF7iXXD5IGrLDQPPvLN2ZgXEFeBsGh5j9fajYfg=
 github.com/cuttle-ai/configs v0.0.0-20190824112953-7860fdfd0dae/go.mod h1:897OjM8X2+kDBNosa7GJCF1Mp1hO76Y/b/wq7nGl9lE=
-github.com/cuttle-ai/file-uploader-service v0.0.0-20200307152319-90e778ef6f2a h1:AFLqHaCpuTNPV2cdJEm2quWZNP4bRJ+l9yCrMA4MaJA=
 github.com/cuttle-ai/file-uploader-service v0.0.0-20200307152319-90e778ef6f2a/go.mod h1:qwxOnRHYowKOUnk0RrI4L6eTOjmDnQbgzTviACE3nUY=
 github.com/cuttle-ai/web-starter v1.1.0/go.mod h1:M4Sxulay7cATcIoGVFsV3dJUYpMFynsNbihssRJ2KoQ=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
