@@ -36,6 +36,9 @@ func GetServices(ctx context.Context, res http.ResponseWriter, req *http.Request
 		response.WriteError(res, response.Error{Err: "Couldn't fetch the list"}, http.StatusInternalServerError)
 		return
 	}
+	for i := 0; i < len(services); i++ {
+		services[i].Password = ""
+	}
 
 	appCtx.Log.Info("Successfully fetched the list of datastore services of length", len(services))
 	response.Write(res, response.Message{Message: "Successfully fetched the list", Data: services})
