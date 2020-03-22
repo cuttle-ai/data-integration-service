@@ -53,6 +53,9 @@ Open another terminal session in the project directory and run the following com
 go run main.go
 ```
 
+Now open the browser and navigate to [localhost:4200](http://localhost:4200). Authenticate yourself using the Google login offered by the platform.
+Open Developer Tools(Browser) -> Application -> Cookies , Use the cookie value of `auth-token` for testing API
+
 ### Environment Variables
 
 | Enivironment Variable           | Description                                                                                                     |
