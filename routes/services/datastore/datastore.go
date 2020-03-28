@@ -67,6 +67,7 @@ func UpdateService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 		response.WriteError(res, response.Error{Err: "Invalid Params " + err.Error()}, http.StatusBadRequest)
 		return
 	}
+	defer req.Body.Close()
 
 	//validating the service
 	err = s.Validate()
@@ -114,6 +115,7 @@ func CreateService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 		response.WriteError(res, response.Error{Err: "Invalid Params " + err.Error()}, http.StatusBadRequest)
 		return
 	}
+	defer req.Body.Close()
 
 	//validating the service
 	err = s.Validate()
@@ -161,6 +163,7 @@ func DeleteService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 		response.WriteError(res, response.Error{Err: "Invalid Params " + err.Error()}, http.StatusBadRequest)
 		return
 	}
+	defer req.Body.Close()
 
 	//validating the service
 	if s.ID == 0 {
