@@ -44,6 +44,44 @@ func GetServices(ctx context.Context, res http.ResponseWriter, req *http.Request
 	response.Write(res, response.Message{Message: "Successfully fetched the list", Data: services})
 }
 
+//GetService api finds the service whole id is given
+func GetService(ctx context.Context, res http.ResponseWriter, req *http.Request) {
+	/*
+	 * We will get the app context
+	 * We will parse the request item
+	 * We will get the service requested
+	 * We will return the response
+	 */
+
+	//getting the app context
+	appCtx := ctx.Value(routes.AppContextKey).(*config.AppContext)
+	appCtx.Log.Info("Got a request to fetch the datastore service info by", appCtx.Session.User.ID)
+
+	//parse the request param service
+	s := &services.Service{}
+	err := json.NewDecoder(req.Body).Decode(s)
+	if err != nil {
+		//bad request
+		appCtx.Log.Error("error while parsing the datastore service", err.Error())
+		response.WriteError(res, response.Error{Err: "Invalid Params " + err.Error()}, http.StatusBadRequest)
+		return
+	}
+	defer req.Body.Close()
+
+	//error while fetching the datastore info
+	err = s.Get(appCtx.Db)
+	if err != nil {
+		//error while getting the info
+		appCtx.Log.Error("error while getting the info", err.Error())
+		response.WriteError(res, response.Error{Err: "Service not found"}, http.StatusNoContent)
+		return
+	}
+	s.Password = ""
+
+	appCtx.Log.Info("Successfully fetched the info of datastore service", s.ID)
+	response.Write(res, response.Message{Message: "Successfully fetched the info", Data: s})
+}
+
 //UpdateService api creates a data store service in the system
 func UpdateService(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	/*
@@ -188,9 +226,16 @@ func DeleteService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 
 func init() {
 	routes.AddRoutes(routes.Route{
-		Version:     "v1",
-		HandlerFunc: GetServices,
-		Pattern:     "/services/datastore/list",
+		Version:                "v1",
+		HandlerFunc:            GetServices,
+		Pattern:                "/services/datastore/list",
+		AccessibleToNormalUser: true,
+	})
+	routes.AddRoutes(routes.Route{
+		Version:                "v1",
+		HandlerFunc:            GetService,
+		Pattern:                "/services/datastore/get",
+		AccessibleToNormalUser: true,
 	})
 	routes.AddRoutes(routes.Route{
 		Version:     "v1",

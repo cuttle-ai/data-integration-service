@@ -34,6 +34,8 @@ type Route struct {
 	HandlerFunc HandlerFunc
 	//ParseForm indicates whether to parse the form or not
 	ParseForm bool
+	//AccessibleToNormalUser indicates that the api is accessible to a normal user
+	AccessibleToNormalUser bool
 }
 
 //AppContextKey is the key with which the application is saved in the request context
@@ -100,7 +102,7 @@ func (r Route) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	//will check whether the user is an admin or not
-	if u.UserType != authConfig.AdminUser && u.UserType != authConfig.SuperAdmin && u.UserType != authConfig.RegisteredApp {
+	if !r.AccessibleToNormalUser && u.UserType != authConfig.AdminUser && u.UserType != authConfig.SuperAdmin && u.UserType != authConfig.RegisteredApp {
 		log.Warn("User doesn't have the admin/superadmin/registeredapp previleges", u.ID)
 		response.WriteError(res, response.Error{Err: "You need admin previlege to access this API"}, http.StatusForbidden)
 		_, cancel := context.WithCancel(ctx)
