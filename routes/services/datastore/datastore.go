@@ -36,9 +36,6 @@ func GetServices(ctx context.Context, res http.ResponseWriter, req *http.Request
 		response.WriteError(res, response.Error{Err: "Couldn't fetch the list"}, http.StatusInternalServerError)
 		return
 	}
-	for i := 0; i < len(services); i++ {
-		services[i].Password = ""
-	}
 
 	appCtx.Log.Info("Successfully fetched the list of datastore services of length", len(services))
 	response.Write(res, response.Message{Message: "Successfully fetched the list", Data: services})
@@ -72,11 +69,10 @@ func GetService(ctx context.Context, res http.ResponseWriter, req *http.Request)
 	err = s.Get(appCtx.Db)
 	if err != nil {
 		//error while getting the info
-		appCtx.Log.Error("error while getting the info", err.Error())
+		appCtx.Log.Error("error while getting the info of", s.ID, err.Error())
 		response.WriteError(res, response.Error{Err: "Service not found"}, http.StatusNoContent)
 		return
 	}
-	s.Password = ""
 
 	appCtx.Log.Info("Successfully fetched the info of datastore service", s.ID)
 	response.Write(res, response.Message{Message: "Successfully fetched the info", Data: s})
@@ -126,7 +122,6 @@ func UpdateService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 	}
 
 	appCtx.Log.Info("Successfully updated the datastore service", s.ID)
-	s.Password = ""
 	response.Write(res, response.Message{Message: "Successfully updated the service", Data: s})
 }
 
