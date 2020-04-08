@@ -10,6 +10,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	authConfig "github.com/cuttle-ai/auth-service/config"
 	"github.com/cuttle-ai/data-integration-service/config"
 	"github.com/cuttle-ai/data-integration-service/routes"
 	"github.com/cuttle-ai/data-integration-service/routes/response"
@@ -35,6 +36,11 @@ func GetServices(ctx context.Context, res http.ResponseWriter, req *http.Request
 		appCtx.Log.Error("error while getting the list", err.Error())
 		response.WriteError(res, response.Error{Err: "Couldn't fetch the list"}, http.StatusInternalServerError)
 		return
+	}
+	if appCtx.Session.User.UserType != authConfig.CuttleApp {
+		for i := 0; i < len(services); i++ {
+			services[i].Password = ""
+		}
 	}
 
 	appCtx.Log.Info("Successfully fetched the list of datastore services of length", len(services))
@@ -72,6 +78,9 @@ func GetService(ctx context.Context, res http.ResponseWriter, req *http.Request)
 		appCtx.Log.Error("error while getting the info of", s.ID, err.Error())
 		response.WriteError(res, response.Error{Err: "Service not found"}, http.StatusNoContent)
 		return
+	}
+	if appCtx.Session.User.UserType != authConfig.CuttleApp {
+		s.Password = ""
 	}
 
 	appCtx.Log.Info("Successfully fetched the info of datastore service", s.ID)
@@ -119,6 +128,9 @@ func UpdateService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 		appCtx.Log.Error("error while updating the service", err.Error())
 		response.WriteError(res, response.Error{Err: "Couldn't update the service"}, http.StatusInternalServerError)
 		return
+	}
+	if appCtx.Session.User.UserType != authConfig.CuttleApp {
+		s.Password = ""
 	}
 
 	appCtx.Log.Info("Successfully updated the datastore service", s.ID)
@@ -169,7 +181,9 @@ func CreateService(ctx context.Context, res http.ResponseWriter, req *http.Reque
 	}
 
 	appCtx.Log.Info("Successfully created the datastore service", s.ID)
-	s.Password = ""
+	if appCtx.Session.User.UserType != authConfig.CuttleApp {
+		s.Password = ""
+	}
 	response.Write(res, response.Message{Message: "Successfully created the service", Data: s})
 }
 
