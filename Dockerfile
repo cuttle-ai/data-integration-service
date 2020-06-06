@@ -23,7 +23,7 @@ RUN go mod download
 RUN apt-get update && apt-get install ca-certificates
 
 # Copy the source from the current directory to the Working Directory inside the container
-COPY auth-service /app
+COPY data-integration-service /app
 
 # Command to run the executable
 CMD ["go", "run", "main.go"]
