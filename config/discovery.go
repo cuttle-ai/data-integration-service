@@ -65,7 +65,7 @@ func init() {
 		Name:    DataIntegrationServiceRPCID,
 		Port:    RPCIntPort,
 		Address: ServiceDomain,
-		Tags:    []string{DataIntegrationServiceID},
+		Tags:    []string{DataIntegrationServiceRPCID},
 		Meta:    map[string]string{"RPCService": "yes"},
 	}
 	log.Println("Going to register the rpc service with the discovery service")
