@@ -6,11 +6,13 @@ WORKDIR /app
 COPY data-integration-service/go.mod data-integration-service/go.sum ./
 COPY configs/go.mod configs/go.sum ./
 COPY auth-service/go.mod auth-service/go.sum ./
+COPY go-sdk/go.mod go-sdk/go.sum ./
 COPY brain/go.mod brain/go.sum ./
 COPY octopus/go.mod octopus/go.sum ./
 COPY db-toolkit/go.mod db-toolkit/go.sum ./
 COPY configs /configs
 COPY auth-service /auth-service
+COPY go-sdk /go-sdk
 COPY brain /brain
 COPY octopus /octopus
 COPY db-toolkit /db-toolkit
