@@ -102,7 +102,7 @@ func (r Route) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	//will check whether the user is an admin or not
-	if !r.AccessibleToNormalUser && u.UserType != authConfig.AdminUser && u.UserType != authConfig.SuperAdmin && u.UserType != authConfig.RegisteredApp {
+	if !r.AccessibleToNormalUser && u.UserType != authConfig.AdminUser && u.UserType != authConfig.SuperAdmin && u.UserType != authConfig.RegisteredApp && u.UserType != authConfig.CuttleApp {
 		log.Warn("User doesn't have the admin/superadmin/registeredapp previleges", u.ID)
 		response.WriteError(res, response.Error{Err: "You need admin previlege to access this API"}, http.StatusForbidden)
 		_, cancel := context.WithCancel(ctx)
